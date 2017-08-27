@@ -1,4 +1,4 @@
-﻿namespace TestGenerator
+﻿namespace TestGenerator.Generators
 {
     public class Property
     {

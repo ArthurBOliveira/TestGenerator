@@ -15,11 +15,11 @@ namespace TestGenerator
 
     public enum MethodType
     {
-        Get,
-        List,
-        Post,
-        Put,
-        Delete
+        GET,
+        LIST,
+        POST,
+        PUT,
+        DELETE
     }
 
     public class Params

@@ -37,6 +37,7 @@
             this.btnRead = new System.Windows.Forms.Button();
             this.txtViewModel = new System.Windows.Forms.RichTextBox();
             this.lblRows = new System.Windows.Forms.Label();
+            this.btnReadModel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblProjectName
@@ -75,9 +76,9 @@
             // 
             this.chkListModels.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkListModels.FormattingEnabled = true;
-            this.chkListModels.Location = new System.Drawing.Point(17, 100);
+            this.chkListModels.Location = new System.Drawing.Point(16, 98);
             this.chkListModels.Name = "chkListModels";
-            this.chkListModels.Size = new System.Drawing.Size(350, 466);
+            this.chkListModels.Size = new System.Drawing.Size(350, 445);
             this.chkListModels.TabIndex = 4;
             this.chkListModels.SelectedIndexChanged += new System.EventHandler(this.chkListModels_SelectedIndexChanged);
             // 
@@ -85,7 +86,7 @@
             // 
             this.lblModels.AutoSize = true;
             this.lblModels.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblModels.Location = new System.Drawing.Point(13, 73);
+            this.lblModels.Location = new System.Drawing.Point(13, 68);
             this.lblModels.Name = "lblModels";
             this.lblModels.Size = new System.Drawing.Size(83, 24);
             this.lblModels.TabIndex = 5;
@@ -107,7 +108,7 @@
             this.btnRead.Name = "btnRead";
             this.btnRead.Size = new System.Drawing.Size(75, 23);
             this.btnRead.TabIndex = 59;
-            this.btnRead.Text = "Ler Arquivos";
+            this.btnRead.Text = "Ler Classe";
             this.btnRead.UseVisualStyleBackColor = true;
             this.btnRead.Click += new System.EventHandler(this.btnRead_Click);
             // 
@@ -130,11 +131,22 @@
             this.lblRows.Size = new System.Drawing.Size(0, 16);
             this.lblRows.TabIndex = 62;
             // 
+            // btnReadModel
+            // 
+            this.btnReadModel.Location = new System.Drawing.Point(567, 71);
+            this.btnReadModel.Name = "btnReadModel";
+            this.btnReadModel.Size = new System.Drawing.Size(75, 23);
+            this.btnReadModel.TabIndex = 63;
+            this.btnReadModel.Text = "Ler Modelo";
+            this.btnReadModel.UseVisualStyleBackColor = true;
+            this.btnReadModel.Click += new System.EventHandler(this.btnReadModel_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(734, 629);
+            this.Controls.Add(this.btnReadModel);
             this.Controls.Add(this.lblRows);
             this.Controls.Add(this.txtViewModel);
             this.Controls.Add(this.btnRead);
@@ -164,5 +176,6 @@
         private System.Windows.Forms.Button btnRead;
         private System.Windows.Forms.RichTextBox txtViewModel;
         private System.Windows.Forms.Label lblRows;
+        private System.Windows.Forms.Button btnReadModel;
     }
 }

@@ -21,30 +21,87 @@ namespace TestGenerator
 
             Methods = new List<Method>();
 
-            strings = text.Split(new string[] { "ResponseType(typeof(" }, StringSplitOptions.None);
+            strings = text.Split(new string[] { "<summary>" }, StringSplitOptions.None);
 
-            for (int i = 0; i < strings.Length - 1; i++)
+            for (int i = 1; i < strings.Length; i++)
             {
-                string response = strings[i].Split(new string[] { "public" }, StringSplitOptions.None)[1].Split(new string[] { " " }, StringSplitOptions.None)[1].Trim();
-                string name = strings[i].Split(new string[] { "public" }, StringSplitOptions.None)[1].Split(new string[] { " " }, StringSplitOptions.None)[2];
+                MethodType type;
 
-                method.Type = response;
-                method.Name = name;
+                string auxType = strings[i].Split(new string[] { "/// " }, StringSplitOptions.None)[1].Split(new string[] { " " }, StringSplitOptions.None)[0];
 
-                if (method.Type != "void")
+                if (Enum.TryParse(auxType, out type))
                 {
-                    if (i == 0 && (method.Type == "Guid" || method.Type == "int"))
-                        method.IsKey = true;
-                    Methods.Add(method);
-                }
+                    method.Type = type;
+                    method.Params = new List<Params>();
 
-                method = new Property();
+                    string name = strings[i].Split(new string[] { "public" }, StringSplitOptions.None)[1].Split(new string[] { " " }, StringSplitOptions.None)[2].Split('(')[0];
+                    method.Name = name;
+
+                    string[] _params = strings[i].Split(new string[] { "public" }, StringSplitOptions.None)[1].Split(')')[0].Split('(')[1].Split(new string[] { ", " }, StringSplitOptions.None);
+
+                    if (_params[0] != "")
+                    {
+                        for (int j = 0; j < _params.Length; j++)
+                        {
+                            Params aux = new Params();
+
+                            _params[j] = _params[j].Replace("[FromBody]", "");
+                            _params[j] = _params[j].Replace("[FromODataUri]", "");
+                            _params[j] = _params[j].Replace("[FromUri]", "");
+
+                            aux.Name = _params[j].Split(new string[] { " " }, StringSplitOptions.None)[1];
+                            aux.Type = _params[j].Split(new string[] { " " }, StringSplitOptions.None)[0];
+
+                            aux.IsObj = CheckIfObj(aux.Type);
+
+                            method.Params.Add(aux);
+                            aux = new Params();
+                        }
+                    }
+
+                    Methods.Add(method);
+
+                    method = new Method();
+                }
             }
         }
 
-        private MethodType checkType()
+        private bool CheckIfObj(string type)
         {
+            if (type.Contains("Guid"))
+                return false;
+            if (type.Contains("Int"))
+                return false;
+            if (type.Contains("Bool"))
+                return false;
+            if (type.Contains("Guid"))
+                return false;
+            if (type.Contains("bool"))
+                return false;
+            if (type.Contains("Boolean"))
+                return false;
+            if (type.Contains("boolean"))
+                return false;
+            if (type.Contains("DateTime"))
+                return false;
+            if (type.Contains("String"))
+                return false;
+            if (type.Contains("string"))
+                return false;
+            if (type.Contains("Float"))
+                return false;
+            if (type.Contains("float"))
+                return false;
+            if (type.Contains("Double"))
+                return false;
+            if (type.Contains("double"))
+                return false;
+            if (type.Contains("Decimal"))
+                return false;
+            if (type.Contains("decimal"))
+                return false;
 
+            return true;
         }
     }
 }

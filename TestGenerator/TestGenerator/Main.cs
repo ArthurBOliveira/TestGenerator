@@ -53,10 +53,10 @@ namespace TestGenerator
             chkListModels.Visible = false;
             btnCreate.Visible = false;
             btnDelete.Visible = false;
-            btnEdit.Visible = false;
             btnRead.Visible = false;
             txtViewModel.Visible = false;
             lblRows.Visible = false;
+            btnReadModel.Visible = false;
         }
 
         private void ShowFields()
@@ -65,10 +65,10 @@ namespace TestGenerator
             chkListModels.Visible = true;
             btnCreate.Visible = true;
             btnDelete.Visible = true;
-            btnEdit.Visible = true;
             btnRead.Visible = true;
             txtViewModel.Visible = true;
             lblRows.Visible = true;
+            btnReadModel.Visible = true;
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -107,7 +107,7 @@ namespace TestGenerator
 
                     for (int i = 1; i < classes.Length; i++)
                     {
-                        ClassTo m = new ClassTo(classes[i]);
+                        ClassTo m = new ClassTo(classes[i], Program.project.Name);
 
                         Program.project.ClassTo.Add(m);
                     }
@@ -133,6 +133,39 @@ namespace TestGenerator
                     txtViewModel.Text += "\t" + m.Type + " " + m.Name + "\r\n";
 
                 txtViewModel.Text += "}";
+            }
+        }
+
+        private void btnReadModel_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Multiselect = true;
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (string file in dialog.FileNames)
+                {
+                    string result = "";
+                    string[] models;
+
+                    System.IO.StreamReader sr = new System.IO.StreamReader(file);
+                    result = sr.ReadToEnd();
+                    sr.Close();
+
+                    models = result.Split(new string[] { "class" }, StringSplitOptions.None);
+
+                    for (int i = 1; i < models.Length; i++)
+                    {
+                        Model m = new Model(models[i], Program.project.Name);
+
+                        if(Program.project.ClassTo.Find(x => x.Name.Contains(m.Name)) != null)
+                        {
+                            Program.project.ClassTo.Find(x => x.Name.Contains(m.Name)).Model = m;
+                        }
+                    }
+
+                    RefreshModels();
+                }
             }
         }
     }
